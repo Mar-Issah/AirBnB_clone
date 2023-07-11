@@ -5,6 +5,7 @@ import unittest
 import models
 import os
 from datetime import datetime
+import time
 from models.base_model import BaseModel
 
 
@@ -70,9 +71,11 @@ class TestBaseModel(unittest.TestCase):
         """ check if date is updated when save """
         my_object = BaseModel()
         first_updated = my_object.updated_at
+        # Introduce a delay of 2 seconds using time.sleep()
+        time.sleep(2)
         my_object.save()
-        second_updated = my_object.updated_at
-        self.assertNotEqual(first_updated, second_updated)
+        updated_after_save = my_object.updated_at
+        self.assertNotEqual(first_updated, updated_after_save)
 
     def test_to_dict(self):
         """check if to_dict returns a dictionary"""
