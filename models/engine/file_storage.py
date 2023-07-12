@@ -20,21 +20,23 @@ class FileStorage:
 
     def new(self, obj):
         """Setter func, set in __objects obj with key <obj_class_name>.id"""
-        ocname = obj.__class__.__name__
-        FileStorage.__objects["{}.{}".format(ocname, obj.id)] = obj
+        object_name = obj.__class__.__name__
+        FileStorage.__objects["{}.{}".format(object_name, obj.id)] = obj
 
     def save(self):
-        """Serialize __objects and save to JSON file __file_path."""
-        odict = FileStorage.__objects
-        objdict = {obj: odict[obj].to_dict() for obj in odict.keys()}
-        with open(FileStorage.__file_path, "w") as f:
-            json.dump(objdict, f)
+        """Serialize __objects and save to JSON file __file_path.
+        Use the keys to get the obj in the file
+        """
+        file_object = FileStorage.__objects
+        objdict = {obj: file_object[obj].to_dict() for obj in file_object.keys()}
+        with open(FileStorage.__file_path, "w") as file:
+            json.dump(objdict, file)
 
     def reload(self):
-        """Deserialize the JSON file __file_path to __objects, and read if it exists."""
+        """Deserialize the JSON file __file_path to __objects, and read if it exists else retrun an error"""
         try:
-            with open(FileStorage.__file_path) as f:
-                objdict = json.load(f)
+            with open(FileStorage.__file_path) as file:
+                objdict = json.load(file)
                 for o in objdict.values():
                     cls_name = o["__class__"]
                     del o["__class__"]
