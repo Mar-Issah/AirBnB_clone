@@ -5,7 +5,7 @@ from models.base_model import BaseModel
 
 class FileStorage:
     """Class that serializes instances to a JSON file
-    and deserializes JSON file to instances
+    and deserializes JSON file to instances. Perform CRUD funcs
 
     Attributes:
         __file_path (str): string - path to the JSON file
@@ -15,17 +15,18 @@ class FileStorage:
     __objects = {}
 
     def all(self):
-        """Getter func, returns the dictionary __objects"""
+        """Getter func, returns the dictionary __objects- retrieve"""
         return FileStorage.__objects
 
     def new(self, obj):
-        """Setter func, set in __objects obj with key <obj_class_name>.id"""
+        """Setter func, set in __objects obj with key <obj_class_name>.id - create
+        save obj in file in format, BaseModel.<id>:<>"""
         object_name = obj.__class__.__name__
         FileStorage.__objects["{}.{}".format(object_name, obj.id)] = obj
 
     def save(self):
         """Serialize __objects and save to JSON file __file_path.
-        Use the keys to get the obj in the file
+        Use the keys to get the obj in the file - update
         """
         file_object = FileStorage.__objects
         objdict = {obj: file_object[obj].to_dict() for obj in file_object.keys()}
@@ -33,7 +34,7 @@ class FileStorage:
             json.dump(objdict, file)
 
     def reload(self):
-        """Deserialize the JSON file __file_path to __objects, and read if it exists else retrun an error"""
+        """Deserialize the JSON file __file_path to __objects, and read if it exists else retrun an error - get all and del class key"""
         try:
             with open(FileStorage.__file_path) as file:
                 objdict = json.load(file)
