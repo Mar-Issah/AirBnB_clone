@@ -15,23 +15,23 @@ class FileStorage:
     __objects = {}
 
     def all(self):
-        """Getter/ Return the dictionary __objects."""
+        """Getter func, returns the dictionary __objects"""
         return FileStorage.__objects
 
     def new(self, obj):
-        """Setter/Set in __objects obj with key <obj_class_name>.id"""
+        """Setter func, set in __objects obj with key <obj_class_name>.id"""
         ocname = obj.__class__.__name__
         FileStorage.__objects["{}.{}".format(ocname, obj.id)] = obj
 
     def save(self):
-        """Serialize __objects to the JSON file __file_path."""
+        """Serialize __objects and save to JSON file __file_path."""
         odict = FileStorage.__objects
         objdict = {obj: odict[obj].to_dict() for obj in odict.keys()}
         with open(FileStorage.__file_path, "w") as f:
             json.dump(objdict, f)
 
     def reload(self):
-        """Deserialize the JSON file __file_path to __objects, if it exists."""
+        """Deserialize the JSON file __file_path to __objects, and read if it exists."""
         try:
             with open(FileStorage.__file_path) as f:
                 objdict = json.load(f)
