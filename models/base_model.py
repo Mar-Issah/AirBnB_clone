@@ -2,6 +2,7 @@
 """Imported modules for the BaseModel class"""
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -23,6 +24,8 @@ class BaseModel:
                     self.__dict__[key] = datetime.strptime(value, timeformat)
                 else:
                     self.__dict__[key] = value
+        else:
+            models.storage.new(self)
 
     def __str__(self):
         """Returns the string rep of the BaseModel instance"""
@@ -32,6 +35,7 @@ class BaseModel:
     def save(self):
         """Updates public instance attr updated_at with current datetime."""
         self.updated_at = datetime.today()
+        models.storage.save()
 
     def to_dict(self):
         """Returns dictionary containing all keys/values of
