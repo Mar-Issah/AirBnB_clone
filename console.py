@@ -98,14 +98,14 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
 
-    # def do_all(self, arg):
-    #     """ Method to print all instances """
-    #     if len(arg) == 0:
-    #         print([str(a) for a in storage.all().values()])
-    #     elif arg not in self.classes:
-    #         print("** class doesn't exist **")
-    #     else:
-    #         print([str(a) for b, a in storage.all().items() if arg in b])
+    def do_all(self, arg):
+        """ Prints all string representation of all instances"""
+        if not arg:
+            print([str(instance) for instance in storage.all().values()])
+        elif arg not in self.classes:
+            print("** class doesn't exist **")
+        else:
+            print([str(instance) for key, instance in storage.all().items() if arg in key])
 
     # def do_update(self, arg):
     #     """ Method to update JSON file"""
