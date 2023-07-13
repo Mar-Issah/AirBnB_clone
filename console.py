@@ -6,7 +6,7 @@ import sys
 import json
 import os
 from models import storage
-# from models.base_model import BaseModel
+from models.base_model import BaseModel
 # from models.user import User
 # from models.place import Place
 # from models.state import State
@@ -19,16 +19,18 @@ class HBNBCommand(cmd.Cmd):
     """Class definition for HBNBCommand """
 
     prompt = '(hbnb) '
-    # classes = {'BaseModel': BaseModel, 'User': User, 'City': City,
-    #            'Place': Place, 'Amenity': Amenity, 'Review': Review,
-    #            'State': State}
+    class_list = {'BaseModel': BaseModel,
+            #    'User': User, 'City': City,
+            #    'Place': Place, 'Amenity': Amenity, 'Review': Review,
+            #    'State': State
+               }
 
     def do_quit(self, arg):
         """ Quit command to exit the program """
-        exit()
+        return True
 
     def do_EOF(self, arg):
-        """ Exit method for quiting the terminal """
+        """ Signal to exit the program """
         print('')
         return True
 
@@ -36,21 +38,20 @@ class HBNBCommand(cmd.Cmd):
         """ Method to pass when emptyline entered """
         pass
 
-    # def do_create(self, arg):
-    #     """ Create a new instance """
-    #     if len(arg) == 0:
-    #         print('** class name missing **')
-    #         return
-    #     new = None
-    #     if arg:
-    #         arg_list = arg.split()
-    #         if len(arg_list) == 1:
-    #             if arg in self.classes.keys():
-    #                 new = self.classes[arg]()
-    #                 new.save()
-    #                 print(new.id)
-    #             else:
-    #                 print("** class doesn't exist **")
+    def do_create(self, arg):
+        """ Create a new class instance and print its id """
+        if not arg:
+            print('** class name missing **')
+            return
+
+        class_name = arg.strip()
+        if class_name not in self.class_list:
+            print("** class doesn't exist **")
+            return
+
+        new_instance = self.class_list[class_name]()
+        new_instance.save()
+        print(new_instance.id)
 
     # def do_show(self, arg):
     #     """ Method to print instance """
