@@ -54,12 +54,7 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
 
     def do_show(self, arg):
-        """  Prints the string representation of an instance
-        based on the class name and id
-
-        Arg:
-        arg: argument user typed on console
-        """
+        """  Prints the string representation of an instance based on the class name and id"""
 
         args_list = arg.split()
         if not args_list:

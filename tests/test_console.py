@@ -101,13 +101,11 @@ class TestHBNBCommand_help(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("help create"))
             self.assertEqual(help, output.getvalue().strip())
 
-    # def test_help_show(self):
-    #     help = ("Usage: show <class> <id> or <class>.show(<id>)\n        "
-    #          "Display the string representation of a class instance of"
-    #          " a given id.")
-    #     with patch("sys.stdout", new=StringIO()) as output:
-    #         self.assertFalse(HBNBCommand().onecmd("help show"))
-    #         self.assertEqual(help, output.getvalue().strip())
+    def test_help_show(self):
+        help = ("Prints the string representation of an instance based on the class name and id")
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("help show"))
+            self.assertEqual(help, output.getvalue().strip())
 
     # def test_help_destroy(self):
     #     help = ("Usage: destroy <class> <id> or <class>.destroy(<id>)\n        "
