@@ -45,6 +45,31 @@ class TestHBNBCommand(unittest.TestCase):
         output = mock_stdout.getvalue().strip()
         self.assertEqual(output, "")
 
+  def test_create_missing_class(self):
+        """Test when class is missing"""
+        error_msg = "** class name missing **"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create"))
+            self.assertEqual(error_msg, output.getvalue().strip())
+
+  def test_create_invalid_class(self):
+        """Test when class name is not in the list."""
+        error_msg = "** class doesn't exist **"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create MyModel"))
+            self.assertEqual(error_msg, output.getvalue().strip())
+
+  def test_create_invalid_syntax(self):
+        """test wrong syntax."""
+        correct = "*** Unknown syntax: MyModel.create()"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("MyModel.create()"))
+            self.assertEqual(correct, output.getvalue().strip())
+        correct = "*** Unknown syntax: BaseModel.create()"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("BaseModel.create()"))
+            self.assertEqual(correct, output.getvalue().strip())
+
 
 class TestHBNBCommand_help(unittest.TestCase):
     """Unittests for testing help messages."""
