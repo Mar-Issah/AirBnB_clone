@@ -70,6 +70,18 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("BaseModel.create()"))
             self.assertEqual(correct, output.getvalue().strip())
 
+  def test_show_missing_class(self):
+    """test show with missing"""
+    with patch("sys.stdout", new=StringIO()) as output:
+        self.assertFalse(HBNBCommand().onecmd("show"))
+        self.assertEqual("** class name missing **", output.getvalue().strip())
+
+  def test_show_invalid_class(self):
+    """test ashow with invalid class"""
+    with patch("sys.stdout", new=StringIO()) as output:
+        self.assertFalse(HBNBCommand().onecmd("show MyModel"))
+        self.assertEqual("** class doesn't exist **", output.getvalue().strip())
+
 
 class TestHBNBCommand_help(unittest.TestCase):
     """Unittests for testing help messages."""
