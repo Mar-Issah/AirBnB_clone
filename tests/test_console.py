@@ -82,6 +82,15 @@ class TestHBNBCommand(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd("show MyModel"))
         self.assertEqual("** class doesn't exist **", output.getvalue().strip())
 
+  def test_destroy_id_missing_space_notation(self):
+      """test destory with missing id"""
+      correct = "** instance id missing **"
+      classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
+      for class_name in classes:
+          with patch("sys.stdout", new=StringIO()) as output:
+              self.assertFalse(HBNBCommand().onecmd(f"destroy {class_name}"))
+              self.assertEqual(correct, output.getvalue().strip())
+
 
 class TestHBNBCommand_help(unittest.TestCase):
     """Unittests for testing help messages."""
