@@ -107,34 +107,36 @@ class HBNBCommand(cmd.Cmd):
         else:
             print([str(instance) for key, instance in storage.all().items() if arg in key])
 
-    # def do_update(self, arg):
-    #     """ Method to update JSON file"""
-    #     arg = arg.split()
-    #     if len(arg) == 0:
-    #         print('** class name missing **')
-    #         return
-    #     elif arg[0] not in self.classes:
-    #         print("** class doesn't exist **")
-    #         return
-    #     elif len(arg) == 1:
-    #         print('** instance id missing **')
-    #         return
-    #     else:
-    #         key = arg[0] + '.' + arg[1]
-    #         if key in storage.all():
-    #             if len(arg) > 2:
-    #                 if len(arg) == 3:
-    #                     print('** value missing **')
-    #                 else:
-    #                     setattr(
-    #                         storage.all()[key],
-    #                         arg[2],
-    #                         arg[3][1:-1])
-    #                     storage.all()[key].save()
-    #             else:
-    #                 print('** attribute name missing **')
-    #         else:
-    #             print('** no instance found **')
+    def do_update(self, arg):
+        """Method to update JSON file"""
+        arg_list = arg.split()
+        if len(arg_list) == 0:
+            print('** class name missing **')
+            return
+        if len(arg_list) == 1:
+            print('** instance id missing **')
+            return
+
+        class_name = arg_list[0]
+        instance_id = arg_list[1]
+
+        if class_name not in self.class_list:
+            print("** class doesn't exist **")
+            return
+        key = class_name + '.' + instance_id
+        if key not in storage.all():
+            print('** no instance found **')
+            return
+        if len(arg_list) < 3:
+            print('** attribute name missing **')
+            return
+        if len(arg_list) < 4:
+            print('** value missing **')
+            return
+        attribute_name = arg_list[2]
+        attribute_value = arg_list[3][1:-1]
+        setattr(storage.all()[key], attribute_name, attribute_value)
+        storage.all()[key].save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
