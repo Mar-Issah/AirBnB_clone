@@ -91,6 +91,42 @@ class TestHBNBCommand(unittest.TestCase):
               self.assertFalse(HBNBCommand().onecmd(f"destroy {class_name}"))
               self.assertEqual(correct, output.getvalue().strip())
 
+  def test_all_invalid_class(self):
+      """Test all with invalid class"""
+      correct = "** class doesn't exist **"
+      with patch("sys.stdout", new=StringIO()) as output:
+          self.assertFalse(HBNBCommand().onecmd("all MyModel"))
+          self.assertEqual(correct, output.getvalue().strip())
+
+  def test_update_missing_class(self):
+      """Test update with missing class"""
+      correct = "** class name missing **"
+      with patch("sys.stdout", new=StringIO()) as output:
+          self.assertFalse(HBNBCommand().onecmd("update"))
+          self.assertEqual(correct, output.getvalue().strip())
+
+      correct2 = "** instance id missing **"
+      with patch("sys.stdout", new=StringIO()) as output:
+          self.assertFalse(HBNBCommand().onecmd("update ."))
+          self.assertEqual(correct2, output.getvalue().strip())
+
+  def test_update_invalid_class(self):
+      """Test update with invalid class"""
+      correct = "** instance id missing **"
+      with patch("sys.stdout", new=StringIO()) as output:
+          self.assertFalse(HBNBCommand().onecmd("update MyModel"))
+          self.assertEqual(correct, output.getvalue().strip())
+
+  def test_update_missing_id(self):
+      """Test update with missing id"""
+      correct = "** instance id missing **"
+      classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
+      for class_name in classes:
+          with patch("sys.stdout", new=StringIO()) as output:
+              self.assertFalse(HBNBCommand().onecmd(f"update {class_name}"))
+              self.assertEqual(correct, output.getvalue().strip())
+
+
 
 class TestHBNBCommand_help(unittest.TestCase):
     """Unittests for testing help messages."""
