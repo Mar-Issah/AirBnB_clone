@@ -53,23 +53,32 @@ class HBNBCommand(cmd.Cmd):
         new_instance.save()
         print(new_instance.id)
 
-    # def do_show(self, arg):
-    #     """ Method to print instance """
-    #     if len(arg) == 0:
-    #         print('** class name missing **')
-    #         return
-    #     elif arg.split()[0] not in self.classes:
-    #         print("** class doesn't exist **")
-    #         return
-    #     elif len(arg.split()) > 1:
-    #         key = arg.split()[0] + '.' + arg.split()[1]
-    #         if key in storage.all():
-    #             i = storage.all()
-    #             print(i[key])
-    #         else:
-    #             print('** no instance found **')
-    #     else:
-    #         print('** instance id missing **')
+    def do_show(self, arg):
+        """  Prints the string representation of an instance
+        based on the class name and id
+
+        Arg:
+        arg: argument user typed on console
+        """
+
+        args_list = arg.split()
+        if not args_list:
+            print('** class name missing **')
+            return
+        class_name = args_list[0]
+        if class_name not in self.class_list:
+            print("** class doesn't exist **")
+            return
+        if len(args_list) < 2:
+            print('** instance id missing **')
+            return
+        instance_id = args_list[1]
+        key = f'{class_name}.{instance_id}'
+        if key in storage.all():
+            instance = storage.all()[key]
+            print(instance)
+        else:
+            print('** no instance found **')
 
     # def do_destroy(self, arg):
     #     """ Method to delete instance with class and id """
