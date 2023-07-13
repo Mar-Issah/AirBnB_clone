@@ -108,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
             print([str(instance) for key, instance in storage.all().items() if arg in key])
 
     def do_update(self, arg):
-        """Method to update JSON file"""
+        """Updates an instance based on the class name and id"""
         arg_list = arg.split()
         if len(arg_list) == 0:
             print('** class name missing **')
