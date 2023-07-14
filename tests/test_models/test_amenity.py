@@ -2,6 +2,7 @@ import unittest
 from models.amenity import Amenity
 import models
 from datetime import datetime
+from time import sleep
 
 
 class TestAmenity(unittest.TestCase):
@@ -68,6 +69,33 @@ class TestAmenity(unittest.TestCase):
         self.assertTrue(amenity.id in str_repr)
         self.assertTrue(amenity.name in str_repr)
 
+		def test_one_save(self):
+        amenity = Amenity()
+        sleep(0.05)
+        first_updated_at = amenity.updated_at
+        amenity.save()
+        self.assertLess(first_updated_at, amenity.updated_at)
+
+    def test_two_saves(self):
+        amenity = Amenity()
+        sleep(0.05)
+        first_updated_at = amenity.updated_at
+        amenity.save()
+        second_updated_at = amenity.updated_at
+        self.assertLess(first_updated_at, second_updated_at)
+        sleep(0.05)
+        amenity.save()
+        self.assertLess(second_updated_at, amenity.updated_at)
+
+            def test_to_dict_type(self):
+        self.assertTrue(dict, type(Amenity().to_dict()))
+
+    def test_to_dict_contains_correct_keys(self):
+        am = Amenity()
+        self.assertIn("id", am.to_dict())
+        self.assertIn("created_at", am.to_dict())
+        self.assertIn("updated_at", am.to_dict())
+        self.assertIn("__class__", am.to_dict())
 
 if __name__ == '__main__':
     unittest.main()
