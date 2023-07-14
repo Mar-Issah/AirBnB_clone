@@ -69,7 +69,8 @@ class TestAmenity(unittest.TestCase):
         self.assertTrue(amenity.id in str_repr)
         self.assertTrue(amenity.name in str_repr)
 
-		def test_one_save(self):
+    def test_one_save(self):
+        """Test that one save updates the updated_at attribute"""
         amenity = Amenity()
         sleep(0.05)
         first_updated_at = amenity.updated_at
@@ -77,6 +78,7 @@ class TestAmenity(unittest.TestCase):
         self.assertLess(first_updated_at, amenity.updated_at)
 
     def test_two_saves(self):
+        """Test that two saves update the updated_at attribute"""
         amenity = Amenity()
         sleep(0.05)
         first_updated_at = amenity.updated_at
@@ -87,15 +89,18 @@ class TestAmenity(unittest.TestCase):
         amenity.save()
         self.assertLess(second_updated_at, amenity.updated_at)
 
-            def test_to_dict_type(self):
+    def test_to_dict_type(self):
+        """Test the type of the to_dict method output"""
         self.assertTrue(dict, type(Amenity().to_dict()))
 
     def test_to_dict_contains_correct_keys(self):
+        """Test if to_dict method contains correct keys"""
         am = Amenity()
         self.assertIn("id", am.to_dict())
         self.assertIn("created_at", am.to_dict())
         self.assertIn("updated_at", am.to_dict())
         self.assertIn("__class__", am.to_dict())
+
 
 if __name__ == '__main__':
     unittest.main()
