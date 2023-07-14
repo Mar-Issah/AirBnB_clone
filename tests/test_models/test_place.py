@@ -2,6 +2,7 @@ import unittest
 from models.place import Place
 import models
 from datetime import datetime
+from time import sleep
 
 
 class TestPlace(unittest.TestCase):
@@ -86,6 +87,37 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.latitude, 37.7749)
         self.assertEqual(place.longitude, -122.4194)
         self.assertEqual(place.amenity_ids, ["amenity1", "amenity2"])
+
+    def test_one_save(self):
+        place = Place()
+        sleep(0.05)
+        first_updated_at = place.updated_at
+        place.save()
+        self.assertLess(first_updated_at, place.updated_at)
+
+    def test_two_saves(self):
+        place = Place()
+        sleep(0.05)
+        first_updated_at = place.updated_at
+        place.save()
+        second_updated_at = place.updated_at
+        self.assertLess(first_updated_at, second_updated_at)
+        sleep(0.05)
+        place.save()
+        self.assertLess(second_updated_at, place.updated_at)
+
+    def test_save_with_arg(self):
+        place = Place()
+        with self.assertRaises(TypeError):
+            place.save(None)
+
+    def test_save_updates_file(self):
+        place = Place()
+        place.save()
+        plid = "Place." + place.id
+        with open("file.json", "r") as f:
+            self.assertIn(plid, f.read())
+
 
 if __name__ == '__main__':
     unittest.main()
