@@ -89,6 +89,7 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.amenity_ids, ["amenity1", "amenity2"])
 
     def test_one_save(self):
+        """Test for one save"""
         place = Place()
         sleep(0.05)
         first_updated_at = place.updated_at
@@ -96,6 +97,7 @@ class TestPlace(unittest.TestCase):
         self.assertLess(first_updated_at, place.updated_at)
 
     def test_two_saves(self):
+        """Test for two saves"""
         place = Place()
         sleep(0.05)
         first_updated_at = place.updated_at
@@ -107,11 +109,13 @@ class TestPlace(unittest.TestCase):
         self.assertLess(second_updated_at, place.updated_at)
 
     def test_save_with_arg(self):
+        """Test for save with args"""
         place = Place()
         with self.assertRaises(TypeError):
             place.save(None)
 
     def test_save_updates_file(self):
+        """Test for updated file"""
         place = Place()
         place.save()
         plid = "Place." + place.id
