@@ -137,6 +137,25 @@ class HBNBCommand(cmd.Cmd):
         setattr(storage.all()[key], attribute_name, attribute_value)
         storage.all()[key].save()
 
+    def precmd(self, argument):
+        """ executed just before the command line is interpreted """
+        args = argument.split('.', 1)
+        if len(args) == 2:
+            class_name = args[0]
+            args = args[1].split('(', 1)
+            class_name_strip = args[0]
+            if len(args) == 2:
+                args = args[1].split(')', 1)
+                if len(args) == 2:
+                    _id = args[0]
+                    other_arguments = args[1]
+            line = class_name_strip + " " + class_name + " "\
+                + _id + " " + other_arguments
+            print(line)
+            return line
+        else:
+            return argument
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
