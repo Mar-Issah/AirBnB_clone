@@ -20,8 +20,8 @@ class TestCity(unittest.TestCase):
         self.assertEqual(city.name, "")
 
     def test_no_args_instantiates(self):
-      """test no arg"""
-      self.assertEqual(City, type(City()))
+        """test no arg"""
+        self.assertEqual(City, type(City()))
 
     def test_id_is_string(self):
         """test id is public string"""

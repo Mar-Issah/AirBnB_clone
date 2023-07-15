@@ -40,11 +40,13 @@ class TestBaseModel(unittest.TestCase):
 
     def test_docstring_presence_module(self):
         """Test if the module has a docstring"""
-        self.assertIsNotNone(models.base_model.__doc__, "Module does not have a docstring")
+        self.assertIsNotNone(models.base_model.__doc__,
+                             "Module does not have a docstring")
 
     def test_docstring_presence_class(self):
         """Test if the class has a docstring"""
-        self.assertIsNotNone(BaseModel.__doc__, "Class does not have a docstring")
+        self.assertIsNotNone(BaseModel.__doc__,
+                             "Class does not have a docstring")
 
     def test_executable_file(self):
         """test if file has permissions read, write and execution"""
@@ -57,7 +59,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_unique_id(self):
         """ test if id is unique """
-        my_object1= BaseModel()
+        my_object1 = BaseModel()
         my_object2 = BaseModel()
         self.assertNotEqual(my_object1.id, my_object2.id)
 

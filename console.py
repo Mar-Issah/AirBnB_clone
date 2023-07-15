@@ -53,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
 
     def do_show(self, arg):
-        """  Prints the string rep of an inst based on class name and id"""
+        """  Prints the str rep of an inst based on class name and id"""
 
         args_list = arg.split()
         if not args_list:

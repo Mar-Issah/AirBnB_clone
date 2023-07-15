@@ -31,9 +31,9 @@ class TestState(unittest.TestCase):
         self.assertLess(first_updated_at, state.updated_at)
 
     def test_args_unused(self):
-      """unused args"""
-      state = State(None)
-      self.assertNotIn(None, state.__dict__.values())
+        """Test for unused args"""
+        state = State(None)
+        self.assertNotIn(None, state.__dict__.values())
 
     def test_state_to_dict(self):
         """Test the to_dict method of the State class"""
@@ -51,6 +51,7 @@ class TestState(unittest.TestCase):
         self.assertTrue("[State]" in str_repr)
         self.assertTrue(state.id in str_repr)
         self.assertTrue(state.name in str_repr)
+
 
 if __name__ == '__main__':
     unittest.main()

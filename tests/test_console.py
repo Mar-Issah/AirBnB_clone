@@ -71,18 +71,21 @@ class TestHBNBCommand(unittest.TestCase):
         """Test show with missing class"""
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("show"))
-            self.assertEqual("** class name missing **", output.getvalue().strip())
+            self.assertEqual("** class name missing **",
+                             output.getvalue().strip())
 
     def test_show_invalid_class(self):
         """Test show with invalid class"""
         with patch("sys.stdout", new_callable=StringIO) as output:
             self.assertFalse(HBNBCommand().onecmd("show MyModel"))
-            self.assertEqual("** class doesn't exist **", output.getvalue().strip())
+            self.assertEqual("** class doesn't exist **",
+                             output.getvalue().strip())
 
     def test_destroy_id_missing_space_notation(self):
         """Test destroy with missing id"""
         correct = "** instance id missing **"
-        classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
+        classes = ['BaseModel', 'User', 'State',
+                   'City', 'Amenity', 'Place', 'Review']
         for class_name in classes:
             with patch("sys.stdout", new_callable=StringIO) as output:
                 self.assertFalse(HBNBCommand().onecmd(f"destroy {class_name}"))
@@ -117,7 +120,8 @@ class TestHBNBCommand(unittest.TestCase):
     def test_update_missing_id(self):
         """Test update with missing id"""
         correct = "** instance id missing **"
-        classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
+        classes = ['BaseModel', 'User', 'State',
+                   'City', 'Amenity', 'Place', 'Review']
         for class_name in classes:
             with patch("sys.stdout", new_callable=StringIO) as output:
                 self.assertFalse(HBNBCommand().onecmd(f"update {class_name}"))
@@ -156,7 +160,7 @@ class TestHBNBCommand_help(unittest.TestCase):
             self.assertEqual(help_text, output.getvalue().strip())
 
     def test_help_show(self):
-        help_text = "Prints the string rep of an inst based on class name and id"
+        help_text = "Prints the str rep of an inst based on class name and id"
         with patch("sys.stdout", new_callable=StringIO) as output:
             self.assertFalse(HBNBCommand().onecmd("help show"))
             self.assertEqual(help_text, output.getvalue().strip())
