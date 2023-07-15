@@ -13,6 +13,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import shlex
 
 
 class HBNBCommand(cmd.Cmd):
@@ -155,6 +156,22 @@ class HBNBCommand(cmd.Cmd):
             return line
         else:
             return argument
+
+    def do_count(self, argument):
+        """  Retrieve the number of instances of a class """
+        token_list = shlex.split(argument)
+        dict = storage.all()
+        num_instances = 0
+        if token_list[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
+        else:
+            for key in dict:
+                class_name = key.split('.')
+                if class_name[0] == token_list[0]:
+                    num_instances += 1
+
+            print(num_instances)
 
 
 if __name__ == '__main__':
