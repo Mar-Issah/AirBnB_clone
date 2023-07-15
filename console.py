@@ -19,11 +19,10 @@ class HBNBCommand(cmd.Cmd):
     """Class definition for HBNBCommand """
 
     prompt = '(hbnb) '
-    class_list = {'BaseModel': BaseModel,
-            #    'User': User, 'City': City,
-            #    'Place': Place, 'Amenity': Amenity, 'Review': Review,
-            #    'State': State
-               }
+    class_list = {'BaseModel': BaseModel, 'User': User,
+                  'City': City, 'Place':
+                      Place, 'Amenity': Amenity,
+                      'Review': Review, 'State': State}
 
     def do_quit(self, arg):
         """ Quit command to exit the program """
@@ -54,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
 
     def do_show(self, arg):
-        """  Prints the string representation of an instance based on the class name and id"""
+        """  Prints the string rep of an inst based on class name and id"""
 
         args_list = arg.split()
         if not args_list:
@@ -97,7 +96,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** no instance found **")
 
-
     def do_all(self, arg):
         """ Prints all string representation of all instances"""
         if not arg:
@@ -105,7 +103,8 @@ class HBNBCommand(cmd.Cmd):
         elif arg not in self.class_list:
             print("** class doesn't exist **")
         else:
-            print([str(instance) for key, instance in storage.all().items() if arg in key])
+            print([str(instance) for key, instance
+                   in storage.all().items() if arg in key])
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
@@ -137,6 +136,7 @@ class HBNBCommand(cmd.Cmd):
         attribute_value = arg_list[3][1:-1]
         setattr(storage.all()[key], attribute_name, attribute_value)
         storage.all()[key].save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

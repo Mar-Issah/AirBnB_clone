@@ -9,6 +9,7 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
+
 class FileStorage:
     """Class that serializes instances to a JSON file
     and deserializes JSON file to instances. Perform CRUD funcs
@@ -25,8 +26,8 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self, obj):
-        """Setter func, set in __objects obj with key <obj_class_name>.id - create
-        save obj in file in format, BaseModel.<id>:<>"""
+        """Setter fn, set in __objects with key <obj_class_name>.id -create"""
+        """save obj in file in format, BaseModel.<id>:<>"""
         object_name = obj.__class__.__name__
         FileStorage.__objects["{}.{}".format(object_name, obj.id)] = obj
 
@@ -35,12 +36,15 @@ class FileStorage:
         Use the keys to get the obj in the file - update
         """
         file_object = FileStorage.__objects
-        objdict = {obj: file_object[obj].to_dict() for obj in file_object.keys()}
+        objdict = {obj: file_object[obj].to_dict()
+                   for obj in file_object.keys()}
         with open(FileStorage.__file_path, "w") as file:
             json.dump(objdict, file)
 
     def reload(self):
-        """Deserialize the JSON file __file_path to __objects, and read if it exists else retrun an error - get all and del class key"""
+        """Deserialize the JSON file __file_path to __object"""
+
+        """and read if it exists else rtn error - get all and del class key"""
         try:
             with open(FileStorage.__file_path) as file:
                 objdict = json.load(file)
