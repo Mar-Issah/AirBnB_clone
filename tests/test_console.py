@@ -127,6 +127,13 @@ class TestHBNBCommand(unittest.TestCase):
                 self.assertFalse(HBNBCommand().onecmd(f"update {class_name}"))
                 self.assertEqual(correct, output.getvalue().strip())
 
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_count_class_not_exist(self, mock_stdout):
+        """Test count command when class doesn't exist"""
+        HBNBCommand().onecmd("count WrongClass")
+        output = mock_stdout.getvalue().strip()
+        self.assertEqual("** class doesn't exist **", output)
+
 
 class TestHBNBCommand_help(unittest.TestCase):
     """Unittests for testing help messages."""
@@ -184,11 +191,12 @@ class TestHBNBCommand_help(unittest.TestCase):
             self.assertEqual(help_text, output.getvalue().strip())
 
     def test_help_count(self):
-            """Test the help message for count command"""
-            help_text = "Retrieve the number of instances of a class"
-            with patch("sys.stdout", new_callable=StringIO) as output:
-                self.assertFalse(HBNBCommand().onecmd("help count"))
-                self.assertEqual(help_text, output.getvalue().strip())
+        """Test the help message for count command"""
+        help_text = "Retrieve the number of instances of a class"
+        with patch("sys.stdout", new_callable=StringIO) as output:
+            self.assertFalse(HBNBCommand().onecmd("help count"))
+            self.assertEqual(help_text, output.getvalue().strip())
+
 
 if __name__ == '__main__':
     unittest.main()

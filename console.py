@@ -162,7 +162,7 @@ class HBNBCommand(cmd.Cmd):
         token_list = shlex.split(argument)
         dict = storage.all()
         num_instances = 0
-        if token_list[0] not in self.classes:
+        if token_list[0] not in self.class_list:
             print("** class doesn't exist **")
             return
         else:
