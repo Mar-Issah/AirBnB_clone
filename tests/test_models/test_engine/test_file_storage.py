@@ -28,26 +28,26 @@ class test_storage(unittest.TestCase):
         """ Save  """
         obj = BaseModel()
         obj_key = 'BaseModel' + '.' + obj.id
-        obj1 = User()
-        obj1_key = 'User' + '.' + obj1.id
-        obj2 = City()
-        obj2_key = 'City' + '.' + obj2.id
-        obj3 = Amenity()
-        obj3_key = 'Amenity' + '.' + obj3.id
-        obj4 = Place()
-        obj4_key = 'Place' + '.' + obj4.id
-        obj5 = Review()
-        obj5_key = 'Review' + '.' + obj5.id
-        obj6 = State()
-        obj6_key = 'State' + '.' + obj6.id
+        user_obj = User()
+        user_key = 'User' + '.' + user_obj.id
+        city_obj = City()
+        city_key = 'City' + '.' + city_obj.id
+        amenity_obj = Amenity()
+        amenity_key = 'Amenity' + '.' + amenity_obj.id
+        place_obj = Place()
+        place_key = 'Place' + '.' + place_obj.id
+        review_obj = Review()
+        review_key = 'Review' + '.' + review_obj.id
+        state_obj = State()
+        state_key = 'State' + '.' + state_obj.id
 
         self.assertEqual(obj, storage.all()[obj_key])
-        self.assertEqual(obj1, storage.all()[obj1_key])
-        self.assertEqual(obj2, storage.all()[obj2_key])
-        self.assertEqual(obj3, storage.all()[obj3_key])
-        self.assertEqual(obj4, storage.all()[obj4_key])
-        self.assertEqual(obj5, storage.all()[obj5_key])
-        self.assertEqual(obj6, storage.all()[obj6_key])
+        self.assertEqual(user_obj, storage.all()[user_key])
+        self.assertEqual(city_obj, storage.all()[city_key])
+        self.assertEqual(amenity_obj, storage.all()[amenity_key])
+        self.assertEqual(place_obj, storage.all()[place_key])
+        self.assertEqual(review_obj, storage.all()[review_key])
+        self.assertEqual(state_obj, storage.all()[state_key])
 
     def test_new_empty(self):
         """ test new method """
