@@ -110,11 +110,8 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         arg_list = arg.split()
-        if len(arg_list) == 0:
+        if len(arg_list) < 2:
             print('** class name missing **')
-            return
-        if len(arg_list) == 1:
-            print('** instance id missing **')
             return
 
         class_name = arg_list[0]
@@ -123,20 +120,29 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in self.class_list:
             print("** class doesn't exist **")
             return
+
         key = class_name + '.' + instance_id
         if key not in storage.all():
             print('** no instance found **')
             return
+
         if len(arg_list) < 3:
             print('** attribute name missing **')
             return
+
         if len(arg_list) < 4:
             print('** value missing **')
             return
+
         attribute_name = arg_list[2]
-        attribute_value = arg_list[3][1:-1]
-        setattr(storage.all()[key], attribute_name, attribute_value)
-        storage.all()[key].save()
+        attribute_value = ' '.join(arg_list[3:])
+        instance = storage.all()[key]
+
+        if hasattr(instance, attribute_name):
+            setattr(instance, attribute_name, attribute_value)
+            instance.save()
+        else:
+            print('** attribute doesn\'t exist **')
 
     def precmd(self, argument):
         """ executed just before the command line is interpreted """
