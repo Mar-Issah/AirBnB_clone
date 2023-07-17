@@ -107,60 +107,64 @@ class HBNBCommand(cmd.Cmd):
             print([str(instance) for key, instance
                    in storage.all().items() if arg in key])
 
-    def do_update(self, arg):
-        """Updates an instance based on the class name and id"""
-        arg_list = arg.split()
-        if len(arg_list) < 2:
-            print('** class name missing **')
+    def do_update(self, argument):
+        """Updates an instance based on the class name and id """
+        token_list = shlex.split(argument)
+        if len(token_list) == 0:
+            print("** class name missing **")
             return
-
-        class_name = arg_list[0]
-        instance_id = arg_list[1]
-
-        if class_name not in self.class_list:
+        elif len(token_list) == 1:
+            print("** instance id missing **")
+            return
+        elif len(token_list) == 2:
+            print("** attribute name missing **")
+            return
+        elif len(token_list) == 3:
+            print("** value missing **")
+            return
+        elif token_list[0] not in self.class_list:
             print("** class doesn't exist **")
             return
-
-        key = class_name + '.' + instance_id
-        if key not in storage.all():
-            print('** no instance found **')
+        keyI = token_list[0] + "." + token_list[1]
+        dicI = storage.all()
+        try:
+            instanceU = dicI[keyI]
+        except KeyError:
+            print("** no instance found **")
             return
-
-        if len(arg_list) < 3:
-            print('** attribute name missing **')
-            return
-
-        if len(arg_list) < 4:
-            print('** value missing **')
-            return
-
-        attribute_name = arg_list[2]
-        attribute_value = ' '.join(arg_list[3:])
-        instance = storage.all()[key]
-
-        if hasattr(instance, attribute_name):
-            setattr(instance, attribute_name, attribute_value)
-            instance.save()
-        else:
-            print('** attribute doesn\'t exist **')
+        try:
+            typeA = type(getattr(instanceU, token_list[2]))
+            token_list[3] = typeA(token_list[3])
+        except AttributeError:
+            pass
+        setattr(instanceU, token_list[2], token_list[3])
+        storage.save()
 
     def precmd(self, argument):
-        """ executed just before the command line is interpreted """
-        args = argument.split('.', 1)
-        if len(args) == 2:
+        """executed just before the command line is interpreted"""
+        try:
+            args = argument.split('.', 1)
+            if len(args) != 2:
+                return argument
+
             class_name = args[0]
             args = args[1].split('(', 1)
+            if len(args) != 2:
+                return argument
+
             class_name_strip = args[0]
-            if len(args) == 2:
-                args = args[1].split(')', 1)
-                if len(args) == 2:
-                    _id = args[0]
-                    other_arguments = args[1]
-            line = class_name_strip + " " + class_name + " "\
-                + _id + " " + other_arguments
+            args = args[1].split(')', 1)
+            if len(args) != 2:
+                return argument
+
+            _id = args[0].replace(",", "").strip()
+            other_arguments = args[1].replace(",", "").strip()
+
+            line = "{} {} {} {}".format(class_name_strip, class_name, _id, other_arguments)
             print(line)
             return line
-        else:
+        except Exception as e:
+            print("Error parsing command: {}".format(str(e)))
             return argument
 
     def do_count(self, argument):
