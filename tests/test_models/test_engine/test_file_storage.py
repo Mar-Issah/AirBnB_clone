@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Tests for Filestorage class """
 import unittest
+import os
 from os import path
 from models import storage
 from models.engine.file_storage import FileStorage
@@ -15,6 +16,25 @@ from models.base_model import BaseModel
 
 class test_storage(unittest.TestCase):
     """ Test the class FileStorage"""
+
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "tmp")
+        except IOError:
+            pass
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp", "file.json")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
 
     def test_all(self):
         """ test all the functions """
