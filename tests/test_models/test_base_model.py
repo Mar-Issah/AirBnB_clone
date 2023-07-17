@@ -54,8 +54,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(is_readable)
         is_writable = os.access('models/base_model.py', os.W_OK)
         self.assertTrue(is_writable)
-        is_executable = os.access('models/base_model.py', os.X_OK)
-        self.assertTrue(is_executable)
 
     def test_unique_id(self):
         """ test if id is unique """

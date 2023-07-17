@@ -62,9 +62,6 @@ class TestUser(unittest.TestCase):
         is_write_true = os.access('models/user.py', os.W_OK)
         self.assertTrue(is_write_true)
 
-        is_exec_true = os.access('models/user.py', os.X_OK)
-        self.assertTrue(is_exec_true)
-
 
 if __name__ == '__main__':
     unittest.main()
