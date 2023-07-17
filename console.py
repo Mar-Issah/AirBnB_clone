@@ -160,7 +160,8 @@ class HBNBCommand(cmd.Cmd):
             _id = args[0].replace(",", "").strip()
             other_arguments = args[1].replace(",", "").strip()
 
-            line = "{} {} {} {}".format(class_name_strip, class_name, _id, other_arguments)
+            line = "{} {} {} {}".format(class_name_strip,
+                                        class_name, _id, other_arguments)
             print(line)
             return line
         except Exception as e:
