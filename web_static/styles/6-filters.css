@@ -58,14 +58,37 @@ button:hover {
 .popover {
     width: 90%;
     background-color: #FAFAFA;
-    display: block;
+    display: none;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     list-style-type: none;
     padding: 10% 5%;
 }
 
+.popover h2 {
+    font-size: 16px;
+}
+
 .sublist {
     list-style-type: none;
     margin-bottom: 10%
+}
+
+.locations li {
+    margin-bottom: 10px;
+}
+.locations:hover .popover {
+    display: block;
+    position: relative;
+    z-index: 100;
+}
+
+.amenities:hover .popover {
+    display: block;
+    position: relative;
+    z-index: 100;
+}
+
+.amenities li {
+    margin-bottom: 15px;
 }
