@@ -17,7 +17,6 @@ article {
     border: 1px solid #FF5A5F;
     border-radius: 4px;
     font-size: 30px;
-    /* text-align: center; */
 }
 
 .place_container{
@@ -26,8 +25,6 @@ article {
     position: relative;
 }
 .place_name {
-    /* width: 100%;
-    display: flex; */
     height: 30px;
     text-align: center;
     font-size: 30px;
